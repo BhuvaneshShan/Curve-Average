@@ -29,6 +29,8 @@ void customizedInit(){
   curve2[6] = P(endPt);
 }
 
+
+
 void showPoints(pt[] ptarray, color c, float size){
   for (int i = 0; i < ptarray.length; i++){
     show(ptarray[i], size, false, c);
@@ -48,6 +50,16 @@ void drawCubicBezier(pt[] controls, float lineWidth, color c){
       previousPt = P(nextPt);
     }
   }
+  
+}
+
+void Interpolate(){
+  //show(startPt, 10);
+  //show(endPt, 10);
+  showPoints(curve1, color(128,0,128), ballSize);
+  showPoints(curve2, color(0,128,128), ballSize);
+  drawCubicBezier(curve1,3,color(128,0,128));
+  drawCubicBezier(curve2,3,color(0,128,128));
 }
 
 void show(pt p, float side, boolean cube, color c)

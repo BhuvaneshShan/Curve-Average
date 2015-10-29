@@ -153,7 +153,7 @@ void keyPressed() {
   if(key=='L') {P.loadPts("data/pts"); Q.loadPts("data/pts2");}   // loads saved model
   if(key=='w') P.savePts("data/pts");   // save vertices to pts
   if(key=='l') P.loadPts("data/pts"); 
-  if(key=='a') {animating=!animating; resetValues();}// toggle animation
+  if(key=='a') {animating=!animating;}// toggle animation
   if(key==',') viewpoint=!viewpoint;
   if(key=='#') exit();
   
@@ -229,6 +229,6 @@ void displayFooter() { // Displays help text at the bottom
     scribeFooter(menu,0); 
     }
 
-String title ="6491 P2 2015: 3D swirl", name ="Ashwin Kachhara | Bhuvanesh Shanmuga Sundaram",
+String title ="6491 P3 2015: Curve Morphing", name ="Ashwin Kachhara | Bhuvanesh Shanmuga Sundaram",
        menu="?:help, !:picture, ~:(start/stop)capture, space:rotate, s/wheel:closer, f/F:refocus, a:anim, #:quit",
        guide="1/2:Initial Size 3/4:Final Size x/z:move point along XY plane or Z axis e/r:rotate about z or x axis"; // user's guide
