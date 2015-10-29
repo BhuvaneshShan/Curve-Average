@@ -1,7 +1,7 @@
 pt startPt,endPt;
 pt[] curve1, curve2;
 
-float ballSize = 10;
+float ballSize = 5;
 
 void init(){
   curve1 = new pt[7];
@@ -29,138 +29,37 @@ void customizedInit(){
   curve2[6] = P(endPt);
 }
 
-
-
-void showPoints(pt[] ptarray){
+void showPoints(pt[] ptarray, color c, float size){
   for (int i = 0; i < ptarray.length; i++){
-    show(ptarray[i], 10, false);
+    show(ptarray[i], size, false, c);
   }
 }
  
-void drawCubicBezier(pt[] controls){
+void drawCubicBezier(pt[] controls, float lineWidth, color c){
   pt previousPt = controls[0];
-  
-  
   pt nextPt;
   for (int i = 0; i < controls.length - 3; i+=3){
     for (int t = 0; t <= 100; t++){
       nextPt = P(bezierCurve(controls[i], controls[i+1], controls[i+2], controls[i+3], (float)t/100.0));
       //println("nextPt: ", nextPt.x, nextPt.y, nextPt.z);
-      stroke(128,0,128,255);
-      strokeWeight(3);
+      stroke(c,255);
+      strokeWeight(lineWidth);
       line(previousPt.x, previousPt.y, previousPt.z, nextPt.x, nextPt.y, nextPt.z);
       previousPt = P(nextPt);
     }
   }
-  
 }
 
-void Interpolate(){
-  //show(startPt, 10);
-  //show(endPt, 10);
-  showPoints(curve1);
-  showPoints(curve2);
-  drawCubicBezier(curve1);
-  drawCubicBezier(curve2);
-}
-
-void resetValues(){
-  
-}
-void show(FR frameToShow, float side, boolean cube)
-{
-  if(cube){
-    float theta = acos((trace(frameToShow)-1)/2);
-    vec axis = AxisAngleVec(frameToShow).div(2*sin(theta));
-    float ang = axis.norm();
-    axis = axis.normalize();
-    pushMatrix(); translate(frameToShow.O.x,frameToShow.O.y,frameToShow.O.z); rotate(ang,axis.x,axis.y,axis.z); box(side); popMatrix();
-    }
-  else{pushMatrix(); translate(frameToShow.O.x,frameToShow.O.y,frameToShow.O.z); sphere(side); popMatrix();}
-}
-
-void show(pt p, float side, boolean cube)
+void show(pt p, float side, boolean cube, color c)
 {
   //boolean cube = false;
   if(cube){
+    stroke(c);
     pushMatrix(); translate(p.x,p.y,p.z); box(side); popMatrix();
     }
-  else{pushMatrix(); translate(p.x,p.y,p.z); sphere(side); popMatrix();}
+  else{stroke(c); pushMatrix(); translate(p.x,p.y,p.z); sphere(side); popMatrix();}
 }
 
-//void drawIntermediateFrame(float rotation, vec translation){
-  
-//  vec midII = R(frame[0].I, rotation, axis);
-//  vec midJJ = R(frame[0].J, rotation, axis);
-//  vec midKK = R(frame[0].K, rotation, axis);
-//  pt midOO = P(fixedPoint,(R(V(fixedPoint, frame[0].O), rotation, axis)));
-  
-//  midOO.add(translation);
-//  middleFrame.set(midII, midJJ, midKK, midOO);
-//  //ballMiddleFrame.setValues(middleFrame);
-//  //ballMiddleFrame.setRadius(initialBallSize* pow(scaling,time));
-//  showRotatedFrame(middleFrame,initialBallSize* pow(scaling,time),2);
-//}
-
-//FR getIntermediateFrame(float rotation, vec translation){
-  
-//  vec midII = R(frame[0].I, rotation, axis);
-//  vec midJJ = R(frame[0].J, rotation, axis);
-//  vec midKK = R(frame[0].K, rotation, axis);
-//  pt midOO = P(fixedPoint,(R(V(fixedPoint, frame[0].O), rotation, axis)));
-  
-//  midOO.add(translation);
-//  middleFrame.set(midII, midJJ, midKK, midOO);
-//  //ballMiddleFrame.setValues(middleFrame);
-//  //ballMiddleFrame.setRadius(initialBallSize* pow(scaling,time));
-//  return middleFrame;
-//}
-
-//void drawIntermediateFramePlaceHolders(){
-//  float ang = 0;
-//  vec trans = V();
-//  for(int i=0;i<numOfIntermediateFrames; i++){
-//    ang = (-angle/(numOfIntermediateFrames))*(i*10.0/9);
-//    trans = V(i*10.0/9, V(10,translationIncrement));
-//    float sfactor = pow(scaling,(i+1)*(1.0f/numOfIntermediateFrames));
-//    if(i!=0 && i!=numOfIntermediateFrames-1){
-//      showRotatedFrame(getIntermediateFrame(ang, trans),initialBallSize*sfactor,1);//i*(1/numOfIntermediateFrames)
-//    }
-//  }
-//}
-
-
-
-//void showRotatedFrame(FR frameToShow,float scale, int type) {
-//  float d = scale*magicSizeFactor;
-//  noStroke();
-//  pushMatrix();
-//  translate(frameToShow.O.x, frameToShow.O.y, frameToShow.O.z);
-//  stroke(red);
-//  strokeWeight(magicSizeFactor);
-//  line(0,0,0,d*frameToShow.I.x,d*frameToShow.I.y,d*frameToShow.I.z);
-//  stroke(green);
-//  line(0,0,0,d*frameToShow.J.x,d*frameToShow.J.y,d*frameToShow.J.z);
-//  stroke(blue);
-//  line(0,0,0,d*frameToShow.K.x,d*frameToShow.K.y,d*frameToShow.K.z);
-//  noStroke();
-  
-//  switch(type){
-//    case 0:
-//      fill(magenta);
-//      break;
-//    case 1:
-//      fill(metal);
-//      break;
-//    case 2:
-//      fill(black);
-//      break;
-//  }
-//  show(P(d*frameToShow.I.x,d*frameToShow.I.y,d*frameToShow.I.z),magicSizeFactor);
-//  show(P(d*frameToShow.J.x,d*frameToShow.J.y,d*frameToShow.J.z),magicSizeFactor);
-//  show(P(d*frameToShow.K.x,d*frameToShow.K.y,d*frameToShow.K.z),magicSizeFactor);
-//  popMatrix();
-//  }
 vec AxisAngleVec(FR f){
   return new vec(f.K.y - f.J.z,f.I.z-f.K.x,f.J.x -f.I.y);
 }
