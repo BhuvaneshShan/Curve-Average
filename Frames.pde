@@ -2,6 +2,10 @@ pt startPt = P(0,0,0);
 pt endPt = P(200, 200, 200);
 pt[] curve1 = {P(startPt), P(30,50,40), P(60,100,80), P(100,140,120), P(140,180,160), P(180,160,200), P(endPt)};
 pt[] curve2 = {P(startPt), P(50,30,40), P(100,80,80), P(130,100,120), P(185,150,160), P(167,192,200), P(endPt)};
+ArrayList<pt> avgCurve = new ArrayList<pt>();
+ArrayList<pt> c1pts = new ArrayList<pt>();
+ArrayList<pt> c2pts = new ArrayList<pt>();
+
 int NUMCTRLPTS = 7;
 
 float ballSize = 5;
@@ -10,7 +14,7 @@ int pickedCtrl = -1;
 int pickedCurve = -1;
 
 void init(){
-  
+  generateAvgCurve(curve1, curve2);
 
 }
 
@@ -103,6 +107,46 @@ void drawCubicBezier(pt[] controls, float lineWidth, color c){
   }
 }
 
+void generateAvgCurve(pt[] curve1, pt[] curve2){
+  avgCurve.add(curve1[0]);
+  c1pts.add(curve1[0]);
+  c2pts.add(curve2[0]);
+  pt curpoint = curve1[0];
+  pt nextpoint;
+  vec c1tan = getTangent(curve1, 0);
+  vec c2tan = getTangent(curve2, 0);
+  
+  float c1param, c2param;
+  
+  //while ( d(curpoint, curve1[NUMCTRLPTS - 1]) > 1){
+  for(int i = 0; i < 1000; i ++){
+    nextpoint = P(curpoint, U(A(c1tan,c2tan)));
+    
+    curpoint = nextpoint;
+    
+    c1param = findClosestPtOn7Bezier(curpoint, curve1, 100);
+    c2param = findClosestPtOn7Bezier(curpoint, curve2, 100);
+    
+    c1pts.add(ptOn7Bezier(curve1, c1param));
+    c2pts.add(ptOn7Bezier(curve2, c2param));
+    
+    c1tan = getTangent(curve1, c1param);
+    c2tan = getTangent(curve2, c2param);
+    
+  }
+  
+}
+
+void drawCurveFromArrayList(ArrayList<pt> points){
+  pt curpt = points.get(0);
+  
+  for (pt nextpt : points){
+    stroke(0);
+    line(curpt.x,curpt.y,curpt.z, nextpt.x, nextpt.y, nextpt.z);
+    curpt = P(nextpt);
+  }
+}
+
 void Interpolate(){
   //show(startPt, 10);
   //show(endPt, 10);
@@ -111,10 +155,14 @@ void Interpolate(){
   draw7Bezier(curve1, 3, color(128, 0, 128));
   draw7Bezier(curve2, 3, color(0, 128, 128));
   
-  pt ext = P(200,-150,100);
-  pt closest = P(ptOn7Bezier(curve1, findClosestPtOn7Bezier(ext,curve1,100)));
-  stroke(0);
-  line(closest.x, closest.y, closest.z, ext.x, ext.y, ext.z);
+  
+  //generateAvgCurve(curve1, curve2);
+  drawCurveFromArrayList(avgCurve);
+  
+  //pt ext = P(200,-150,100);
+  //pt closest = P(ptOn7Bezier(curve1, findClosestPtOn7Bezier(ext,curve1,100)));
+  //stroke(0);
+  //line(closest.x, closest.y, closest.z, ext.x, ext.y, ext.z);
   
   //To move control points of the curves.
   if(mousePressed&&!keyPressed){

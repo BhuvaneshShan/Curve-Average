@@ -60,7 +60,7 @@ vec V(float s, vec A) {return new vec(s*A.x,s*A.y,s*A.z); };                    
 vec V(float a, vec A, float b, vec B) {return A(V(a,A),V(b,B));}                                       // aA+bB 
 vec V(float a, vec A, float b, vec B, float c, vec C) {return A(V(a,A,b,B),V(c,C));}                   // aA+bB+cC
 vec V(pt P, pt Q) {return new vec(Q.x-P.x,Q.y-P.y,Q.z-P.z);};                                          // PQ
-vec U(vec V) {float n = V.norm(); if (n<0.0000001) return V(0,0,0); else return V.div(n);};             // V/||V||
+vec U(vec V) {float n = V.norm(); if (n<0.0000001) return V(0,0,0); else return V(1./n,V);}; // V/||V||
 vec U(pt P, pt Q) {return U(V(P,Q));};                                                                 // PQ/||PQ||
 vec U(float x, float y, float z) {return U(V(x,y,z)); };                                               // make vector (x,y,z)
 vec N(vec U, vec V) {return V( U.y*V.z-U.z*V.y, U.z*V.x-U.x*V.z, U.x*V.y-U.y*V.x); };                  // UxV cross product (normal to both)
