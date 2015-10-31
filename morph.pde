@@ -186,7 +186,6 @@ void mouseDragged() {
            } else {
              if (pickedCurve == 1){
                curve1[pickedCtrl].add(ToIJ(V((float)(mouseX-pmouseX),(float)(mouseY-pmouseY),0)));
-               //positionChanged = true;
              } 
              if (pickedCurve == 2){
                curve2[pickedCtrl].add(ToIJ(V((float)(mouseX-pmouseX),(float)(mouseY-pmouseY),0)));
@@ -196,28 +195,29 @@ void mouseDragged() {
            //positionChanged = true;
          }
        } 
-  //if (keyPressed && key=='z'){ 
-  //     P.movePicked(ToK(V((float)(mouseX-pmouseX),(float)(mouseY-pmouseY),0)));
-  //     if(pickedFrame!=-1)
-  //       {
-  //         frame[pickedFrame].movePicked(ToK(V((float)(mouseX-pmouseX),(float)(mouseY-pmouseY),0)));
-  //         positionChanged = true;
-  //       }
-  //   } 
-  //if (keyPressed && key=='r'){
-  //  //rotate frame
-  //  if(pickedFrame!=-1){
-  //    frame[pickedFrame].rotatePicked((float)(mouseX-pmouseX));
-  //    positionChanged = true;
-  //  }
-  //}
-  //if (keyPressed && key=='e'){
-  //  //rotate frame
-  //  if(pickedFrame!=-1){
-  //    frame[pickedFrame].rotatePickedZ((float)(mouseX-pmouseX));
-  //    positionChanged = true;
-  //  }
-  //}
+  if (keyPressed && key=='z'){ 
+      P.movePicked(ToK(V((float)(mouseX-pmouseX),(float)(mouseY-pmouseY),0)));
+      if(pickedCtrl!=-1)
+         { if (pickedCtrl == 0 || pickedCtrl == NUMCTRLPTS-1){
+             curve1[pickedCtrl].add(ToK(V((float)(mouseX-pmouseX),(float)(mouseY-pmouseY),0)));
+             curve2[pickedCtrl] = curve1[pickedCtrl];
+           } else {
+             if (pickedCurve == 1){
+               curve1[pickedCtrl].add(ToK(V((float)(mouseX-pmouseX),(float)(mouseY-pmouseY),0)));
+             } 
+             if (pickedCurve == 2){
+               curve2[pickedCtrl].add(ToK(V((float)(mouseX-pmouseX),(float)(mouseY-pmouseY),0)));
+             }
+           }
+
+         }
+      //if(pickedFrame!=-1)
+      //  {
+      //    frame[pickedFrame].movePicked(ToK(V((float)(mouseX-pmouseX),(float)(mouseY-pmouseY),0)));
+      //    positionChanged = true;
+      //  }
+    } 
+  
   if (keyPressed && key=='X') P.moveAll(ToIJ(V((float)(mouseX-pmouseX),(float)(mouseY-pmouseY),0))); 
   if (keyPressed && key=='Z') P.moveAll(ToK(V((float)(mouseX-pmouseX),(float)(mouseY-pmouseY),0))); 
   if (keyPressed && key=='f') { // move focus point on plane

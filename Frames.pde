@@ -68,18 +68,7 @@ void Interpolate(){
          pickedCtrl = i;
        }
      }
-     
-     //for(int i=0 ; i<2; i++){
-     //  if(isPicked(pickedPt,frame[i])){
-     //    pickedFrame = i;
-     //  }
-     //}
-     //if(isPickedForRotating(pickedPt,frame[0],initialBallSize)){
-     //    pickedFrame = 0;
-     //  }
-     // if(isPickedForRotating(pickedPt,frame[1],finalBallSize)){
-     //    pickedFrame = 1;
-     //  }
+
   } 
 }
 
