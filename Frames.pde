@@ -28,6 +28,29 @@ void showPoints(pt[] ptarray, color c, float size){
   }
 }
 
+float findClosestPtOn7Bezier(pt ext, pt[] controls, int sampling){
+  float inc = 1.0/sampling;
+  //println("increment: %f", inc);
+  float minparam = 0;
+  float mindist = MAX_FLOAT;
+  float nextDist = 0;
+  float i;
+  for (i = 0; i<=1; i+=inc){
+    nextDist = d(ext, ptOn7Bezier(controls,i));
+    //println("increment: ", inc,"nextDist: ", nextDist,"param: ", i);
+    if (nextDist < mindist){
+      minparam = i;
+      mindist = nextDist;
+    }
+  }
+  //println("mindist: ", mindist, "minparam: ", minparam);
+  return minparam;
+}
+
+pt ptOn7Bezier(pt[] controls, float param){
+  return P(bezierCurve(controls[0], controls[1], controls[2], controls[3],controls[4],controls[5],controls[6], param));
+}
+
 void draw7Bezier(pt[] controls, float lineWidth, color c){
   pt previousPt = P(controls[0]);
   for (int t=0; t<=100; t++){
@@ -60,7 +83,12 @@ void Interpolate(){
   showPoints(curve1, color(128,0,128), ballSize);
   showPoints(curve2, color(0,128,128), ballSize);
   draw7Bezier(curve1, 3, color(128, 0, 128));
-  draw7Bezier(curve2, 3, color(0, 128, 128));  
+  draw7Bezier(curve2, 3, color(0, 128, 128));
+  
+  pt ext = P(200,-150,100);
+  pt closest = P(ptOn7Bezier(curve1, findClosestPtOn7Bezier(ext,curve1,100)));
+  stroke(0);
+  line(closest.x, closest.y, closest.z, ext.x, ext.y, ext.z);
   
   //To move control points of the curves.
   if(mousePressed&&!keyPressed){
