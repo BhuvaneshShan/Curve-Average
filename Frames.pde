@@ -76,18 +76,18 @@ vec getTangent(pt[] controls, float t){
   pt g = P(controls[6]);
   //Tang = P(6,A(P(t*5,A(g,A(P(−6,f),A(P(−20,d),A(P(15,c),A(P(−6,b),A(a,P(15,e)))))))), (5f+50d−50c+25b−5a−25e)t4,  (−40d+60c−40b+10a+10e)t3,  (10d−30c+30b−10a)t2,  (5c−10b+5a)t, b−a)));
   //−6bt5+6at5−30c(1−t)t4+30b(1−t)t4−60d(1−t)2t3+60c(1−t)2t3+60d(1−t)3t2−60e(1−t)3t2−30f(1−t)4t+30e(1−t)4t−6g(1−t)5+6f(1−t)5
-  pt b1 = P(-6*t*5,b);
-  pt a1 = P(6*t*5,a);
-  pt c1 = P(-30*(1-t)*t*4,c);
-  pt b2 = P(30*(1-t)*t*4,b);
+  pt b1 = P(6*t*5,g);
+  pt a1 = P(-6*t*5,f);
+  pt c1 = P(30*(1-t)*t*4,f);
+  pt b2 = P(-30*(1-t)*t*4,e);
   pt d1 = P(-60*(1-t)*2*t*3,d);
-  pt c2 = P(60*(1-t)*2*t*3,c);
+  pt c2 = P(60*(1-t)*2*t*3,e);
   pt d2 = P(60*(1-t)*3*t*2,d);
-  pt e1 = P(-60*(1-t)*3*t*2,e);
-  pt f1 = P(-30*(1-t)*4*t,f);
-  pt e2 = P(30*(1-t)*4*t,e);
-  pt g1 = P(-6*(1-t)*5,g);
-  pt f2 = P(6*(1-t)*5,f);
+  pt e1 = P(-60*(1-t)*3*t*2,c);
+  pt f1 = P(30*(1-t)*4*t,c);
+  pt e2 = P(-30*(1-t)*4*t,b);
+  pt g1 = P(6*(1-t)*5,b);
+  pt f2 = P(-6*(1-t)*5,a);
   pt tg = A(A(A(b1,a1), A(c1,b2)),A( A(A(d1,c2), A(d2,e1)), A(A(f1,e2), A(g1, f2))));
   return V(tg.x, tg.y, tg.z);
 }
@@ -119,16 +119,21 @@ void generateAvgCurve(pt[] curve1, pt[] curve2){
   float c1param, c2param;
   
   //while ( d(curpoint, curve1[NUMCTRLPTS - 1]) > 1){
-  for(int i = 0; i < 1000; i ++){
-    nextpoint = P(curpoint, U(A(c1tan,c2tan)));
+  for(int i = 0; i < 50; i ++){
+    println("c1tan: ", c1tan.x, " ", c1tan.y, " ", c1tan.z);
+    println("c2tan: ", c2tan.x, " ", c2tan.y, " ", c2tan.z);
+    nextpoint = P(curpoint, V(5,U(A(c1tan,c2tan))));
     
     curpoint = nextpoint;
+    println("nextpoint: ", nextpoint.x, " ", nextpoint.y, " ", nextpoint.z);
     
     c1param = findClosestPtOn7Bezier(curpoint, curve1, 100);
     c2param = findClosestPtOn7Bezier(curpoint, curve2, 100);
     
     c1pts.add(ptOn7Bezier(curve1, c1param));
     c2pts.add(ptOn7Bezier(curve2, c2param));
+    avgCurve.add(nextpoint);
+    println("params: ", c1param, "; ", c2param);
     
     c1tan = getTangent(curve1, c1param);
     c2tan = getTangent(curve2, c2param);
@@ -139,9 +144,11 @@ void generateAvgCurve(pt[] curve1, pt[] curve2){
 
 void drawCurveFromArrayList(ArrayList<pt> points){
   pt curpt = points.get(0);
-  
-  for (pt nextpt : points){
+  pt nextpt;
+  for (int i=1; i< points.size(); i++){
+    nextpt = points.get(i);
     stroke(0);
+    //strokeWeight(10);
     line(curpt.x,curpt.y,curpt.z, nextpt.x, nextpt.y, nextpt.z);
     curpt = P(nextpt);
   }
