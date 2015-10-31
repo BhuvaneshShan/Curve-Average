@@ -331,6 +331,10 @@ vec ToK(vec V) {
  }
  
 //************ Curves
+pt bezierCurve(pt A, pt B, pt C, pt D, pt E, pt F, pt G, float t){
+  return A(A(A(A(A(A(P(pow((1-t),6),A), P(6*pow((1-t),5)*t,B)), P(15*pow((1-t),4)*pow(t,2),C)), P(20*pow((1-t),3)*pow(t,3),D)), P(15*pow((1-t),2)*pow(t,4),E)), P(6*(1-t)*pow(t,5),F)),P(pow(t,6),G));
+}
+
 pt bezierCurve(pt A, pt B, pt C, pt D, float t){
   return linearCurve(bezierCurve(A, B, C, t), t, bezierCurve(B, C, D, t));
 }

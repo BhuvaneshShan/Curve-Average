@@ -27,7 +27,18 @@ void showPoints(pt[] ptarray, color c, float size){
     show(ptarray[i], size, false, c);
   }
 }
- 
+
+void draw7Bezier(pt[] controls, float lineWidth, color c){
+  pt previousPt = P(controls[0]);
+  for (int t=0; t<=100; t++){
+    pt nextPt = P(bezierCurve(controls[0], controls[1], controls[2], controls[3],controls[4],controls[5],controls[6], (float)t/100.0));
+    stroke(c,255);
+    strokeWeight(lineWidth);
+    line(previousPt.x, previousPt.y, previousPt.z, nextPt.x, nextPt.y, nextPt.z);
+    previousPt = P(nextPt);
+  }
+}
+
 void drawCubicBezier(pt[] controls, float lineWidth, color c){
   pt previousPt = controls[0];
   pt nextPt;
@@ -41,7 +52,6 @@ void drawCubicBezier(pt[] controls, float lineWidth, color c){
       previousPt = P(nextPt);
     }
   }
-  
 }
 
 void Interpolate(){
@@ -49,8 +59,8 @@ void Interpolate(){
   //show(endPt, 10);
   showPoints(curve1, color(128,0,128), ballSize);
   showPoints(curve2, color(0,128,128), ballSize);
-  drawCubicBezier(curve1,3,color(128,0,128));
-  drawCubicBezier(curve2,3,color(0,128,128));
+  draw7Bezier(curve1, 3, color(128, 0, 128));
+  draw7Bezier(curve2, 3, color(0, 128, 128));  
   
   //To move control points of the curves.
   if(mousePressed&&!keyPressed){
