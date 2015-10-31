@@ -141,7 +141,7 @@ void generateAvgCurve(pt[] curve1, pt[] curve2){
     
     c1tan = U(getTangent(curve1, c1param));
     c2tan = U(getTangent(curve2, c2param));
-    if (c1param >0.95 && c2param > 0.95)
+    if (c1param >0.99 && c2param > 0.99)
       break;
   }
   
