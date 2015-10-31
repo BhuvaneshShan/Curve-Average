@@ -1,32 +1,23 @@
-pt startPt,endPt;
-pt[] curve1, curve2;
+pt startPt = P(0,0,0);
+pt endPt = P(200, 200, 200);
+pt[] curve1 = {P(startPt), P(30,50,40), P(60,100,80), P(100,140,120), P(140,180,160), P(180,160,200), P(endPt)};
+pt[] curve2 = {P(startPt), P(50,30,40), P(100,80,80), P(130,100,120), P(185,150,160), P(167,192,200), P(endPt)};
+int NUMCTRLPTS = 7;
 
 float ballSize = 5;
 
+int pickedCtrl = -1;
+int pickedCurve = -1;
+
 void init(){
-  curve1 = new pt[7];
-  curve2 = new pt[7];
   
-  startPt = P(0,0,0);
-  endPt = P(200, 200, 200);
+
 }
 
 void customizedInit(){
-  curve1[0] = P(startPt);
-  curve1[1] = P(30,50,40);
-  curve1[2] = P(60,100,80);
-  curve1[3] = P(100,140,120);
-  curve1[4] = P(140,180,160);
-  curve1[5] = P(180,160,200);
-  curve1[6] = P(endPt);
   
-  curve2[0] = P(startPt);
-  curve2[1] = P(50,30,40);
-  curve2[2] = P(100,80,80);
-  curve2[3] = P(130,100,120);
-  curve2[4] = P(185,150,160);
-  curve2[5] = P(167,192,200);
-  curve2[6] = P(endPt);
+  
+  
 }
 
 
@@ -60,6 +51,36 @@ void Interpolate(){
   showPoints(curve2, color(0,128,128), ballSize);
   drawCubicBezier(curve1,3,color(128,0,128));
   drawCubicBezier(curve2,3,color(0,128,128));
+  
+  //To move control points of the curves.
+  if(mousePressed&&!keyPressed){
+     pickedCtrl = -1;
+     pickedCurve = -1;
+     pt pickedPt = pick( mouseX, mouseY);  
+     print("Picked position:"+Of.x+","+Of.y+","+Of.z);
+     for (int i=0; i<NUMCTRLPTS; i++){
+       if(isPicked(pickedPt, curve1[i], ballSize)){
+         pickedCurve = 1;
+         pickedCtrl = i;
+       }
+       if(isPicked(pickedPt, curve2[i], ballSize)){
+         pickedCurve = 2;
+         pickedCtrl = i;
+       }
+     }
+     
+     //for(int i=0 ; i<2; i++){
+     //  if(isPicked(pickedPt,frame[i])){
+     //    pickedFrame = i;
+     //  }
+     //}
+     //if(isPickedForRotating(pickedPt,frame[0],initialBallSize)){
+     //    pickedFrame = 0;
+     //  }
+     // if(isPickedForRotating(pickedPt,frame[1],finalBallSize)){
+     //    pickedFrame = 1;
+     //  }
+  } 
 }
 
 void show(pt p, float side, boolean cube, color c)
@@ -83,6 +104,14 @@ boolean isPicked(pt of,FR fr){
   if(fr.O.x + 5 > of.x && fr.O.x-5 < of.x)
     if(fr.O.y + 5 > of.y && fr.O.y-5 < of.y)
       if(fr.O.z + 5 > of.z && fr.O.z-5 < of.z)
+        return true;
+  return false;
+}
+
+boolean isPicked(pt of, pt ctrl, float threshold){
+  if(ctrl.x + threshold > of.x && ctrl.x-threshold < of.x)
+    if(ctrl.y + threshold > of.y && ctrl.y-threshold < of.y)
+      if(ctrl.z + threshold > of.z && ctrl.z-threshold < of.z)
         return true;
   return false;
 }

@@ -330,7 +330,7 @@ vec ToK(vec V) {
  return V(0,0,z);
  }
  
-//Curves
+//************ Curves
 pt bezierCurve(pt A, pt B, pt C, pt D, float t){
   return linearCurve(bezierCurve(A, B, C, t), t, bezierCurve(B, C, D, t));
 }

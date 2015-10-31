@@ -177,22 +177,33 @@ void mouseMoved() {
 void mouseDragged() {
   if (!keyPressed) {Of.add(ToIJ(V((float)(mouseX-pmouseX),(float)(mouseY-pmouseY),0))); }
   if (keyPressed && key==CODED && keyCode==SHIFT) {Of.add(ToK(V((float)(mouseX-pmouseX),(float)(mouseY-pmouseY),0)));};
-  //if (keyPressed && key=='x'){ 
-  //        P.movePicked(ToIJ(V((float)(mouseX-pmouseX),(float)(mouseY-pmouseY),0)));
-  //        if(pickedFrame!=-1)
-  //        {
-  //          frame[pickedFrame].movePicked(ToIJ(V((float)(mouseX-pmouseX),(float)(mouseY-pmouseY),0)));
-  //          positionChanged = true;
-  //        }
-  //      } 
+  if (keyPressed && key=='x'){ 
+         P.movePicked(ToIJ(V((float)(mouseX-pmouseX),(float)(mouseY-pmouseY),0)));
+         if(pickedCtrl!=-1)
+         { if (pickedCtrl == 0 || pickedCtrl == NUMCTRLPTS-1){
+             curve1[pickedCtrl].add(ToIJ(V((float)(mouseX-pmouseX),(float)(mouseY-pmouseY),0)));
+             curve2[pickedCtrl] = curve1[pickedCtrl];
+           } else {
+             if (pickedCurve == 1){
+               curve1[pickedCtrl].add(ToIJ(V((float)(mouseX-pmouseX),(float)(mouseY-pmouseY),0)));
+               //positionChanged = true;
+             } 
+             if (pickedCurve == 2){
+               curve2[pickedCtrl].add(ToIJ(V((float)(mouseX-pmouseX),(float)(mouseY-pmouseY),0)));
+             }
+           }
+           //frame[pickedFrame].movePicked(ToIJ(V((float)(mouseX-pmouseX),(float)(mouseY-pmouseY),0)));
+           //positionChanged = true;
+         }
+       } 
   //if (keyPressed && key=='z'){ 
-  //      P.movePicked(ToK(V((float)(mouseX-pmouseX),(float)(mouseY-pmouseY),0)));
-  //      if(pickedFrame!=-1)
-  //        {
-  //          frame[pickedFrame].movePicked(ToK(V((float)(mouseX-pmouseX),(float)(mouseY-pmouseY),0)));
-  //          positionChanged = true;
-  //        }
-  //    } 
+  //     P.movePicked(ToK(V((float)(mouseX-pmouseX),(float)(mouseY-pmouseY),0)));
+  //     if(pickedFrame!=-1)
+  //       {
+  //         frame[pickedFrame].movePicked(ToK(V((float)(mouseX-pmouseX),(float)(mouseY-pmouseY),0)));
+  //         positionChanged = true;
+  //       }
+  //   } 
   //if (keyPressed && key=='r'){
   //  //rotate frame
   //  if(pickedFrame!=-1){
