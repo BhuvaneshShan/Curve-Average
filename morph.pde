@@ -159,7 +159,7 @@ void keyPressed() {
   if(key==',') viewpoint=!viewpoint;
   if(key=='#') exit();
   
-  if(key=='t') showTransArc=!showTransArc;
+  if(key=='t') {showTransArc=!showTransArc;morphFrame = 0;}
   if(key=='g') {generateAvgCurve(curve1, curve2);ta.Copy(avgCurve, c1pts, c2pts);}
   
   change=true;
@@ -249,4 +249,4 @@ void displayFooter() { // Displays help text at the bottom
 
 String title ="6491 P3 2015: Curve Morphing", name ="Ashwin Kachhara | Bhuvanesh Shanmuga Sundaram",
        menu="?:help, !:picture, ~:(start/stop)capture, space:rotate, s/wheel:closer, f/F:refocus, a:anim, #:quit",
-       guide="g:To generate avg curve t:To display Transversal arc x/z:move point along XY plane or Z axis"; // user's guide
+       guide="g:To generate avg curve  t:Transversal arc+morph x/z:move point along XY plane/Z axis"; // user's guide

@@ -173,6 +173,10 @@ void Interpolate(){
   drawCurveFromArrayList(avgCurve);
   if (showTransArc){
     ta.drawArc();
+    ta.morph(morphFrame/TotalMorphFrames);
+    morphFrame = morphFrame+1;
+    if(morphFrame>TotalMorphFrames)
+      morphFrame = 0;
   }
   //pt ext = P(200,-150,100);
   //pt closest = P(ptOn7Bezier(curve1, findClosestPtOn7Bezier(ext,curve1,100)));
