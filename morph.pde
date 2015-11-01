@@ -1,5 +1,6 @@
 // Skate dancer on moving terrain
 float dz=0; // distance to camera. Manipulated with wheel or when 
+float dx = 0;float dy = 0;
 //float rx=-0.06*TWO_PI, ry=-0.04*TWO_PI;    // view angles manipulated when space pressed but not mouse
 float rx=0, ry=0;    // view angles manipulated when space pressed but not mouse
 Boolean twistFree=false, animating=true, tracking=false, center=true, gouraud=true, showControlPolygon=false, showNormals=false;
@@ -9,6 +10,7 @@ pt Viewer = P();
 pt F = P(0,0,0);  // focus point:  the camera is looking at it (moved when 'f or 'F' are pressed
 pt Of=P(100,100,0), Ob=P(110,110,0); // red point controlled by the user via mouseDrag : used for inserting vertices ...
 pt Vf=P(0,0,0), Vb=P(0,0,0);
+
 void setup() {
   myFace = loadImage("data/pic.jpg");  // load image from file pic.jpg in folder data *** replace that file with your pic of your own face
   textureMode(NORMAL);          
@@ -32,7 +34,7 @@ void draw() {
     camera(0,0,cameraZ,0,0,0,0,1,0  );       // sets a standard perspective
     perspective(fov, 1.0, 0.1, 10000);
     
-    translate(0,0,dz); // puts origin of model at screen center and moves forward/away by dz
+    translate(dx,dy,dz); // puts origin of model at screen center and moves forward/away by dz
     lights();  // turns on view-dependent lighting
     rotateX(rx); rotateY(ry); // rotates the model around the new origin (center of screen)
     rotateX(PI/2); // rotates frame around X to make X and Y basis vectors parallel to the floor
@@ -138,7 +140,7 @@ void keyPressed() {
   if(key=='~') filming=!filming;
   if(key==']') showControlPolygon=!showControlPolygon;
   if(key=='|') showNormals=!showNormals;
-  if(key=='G') gouraud=!gouraud;
+  //if(key=='G') gouraud=!gouraud;
   if(key=='q') Q.copyFrom(P);
   if(key=='p') P.copyFrom(Q);
   if(key=='e') {PtQ.copyFrom(Q);Q.copyFrom(P);P.copyFrom(PtQ);}
@@ -157,6 +159,9 @@ void keyPressed() {
   if(key==',') viewpoint=!viewpoint;
   if(key=='#') exit();
   
+  if(key=='t') showTransArc=!showTransArc;
+  if(key=='g') {generateAvgCurve(curve1, curve2);ta.Copy(avgCurve, c1pts, c2pts);}
+  
   change=true;
   }
 
@@ -171,7 +176,9 @@ void mouseMoved() {
   if (keyPressed && key=='s') dz+=(float)(mouseY-pmouseY); // approach view (same as wheel)
   if (keyPressed && key=='v') { //**<01 
       u+=(float)(mouseX-pmouseX)/width;  u=max(min(u,1),0);
-      v+=(float)(mouseY-pmouseY)/height; v=max(min(v,1),0); 
+      v+=(float)(mouseY-pmouseY)/height; v=max(min(v,1),0);
+      dx += (float)(mouseX-pmouseX);
+      dy += (float)(mouseY-pmouseY);
       } 
   }
 void mouseDragged() {
@@ -242,4 +249,4 @@ void displayFooter() { // Displays help text at the bottom
 
 String title ="6491 P3 2015: Curve Morphing", name ="Ashwin Kachhara | Bhuvanesh Shanmuga Sundaram",
        menu="?:help, !:picture, ~:(start/stop)capture, space:rotate, s/wheel:closer, f/F:refocus, a:anim, #:quit",
-       guide="1/2:Initial Size 3/4:Final Size x/z:move point along XY plane or Z axis e/r:rotate about z or x axis"; // user's guide
+       guide="g:To generate avg curve t:To display Transversal arc x/z:move point along XY plane or Z axis"; // user's guide

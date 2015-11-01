@@ -5,7 +5,7 @@ pt[] curve2 = {P(startPt), P(50,30,40), P(100,80,80), P(130,100,120), P(185,150,
 ArrayList<pt> avgCurve = new ArrayList<pt>();
 ArrayList<pt> c1pts = new ArrayList<pt>();
 ArrayList<pt> c2pts = new ArrayList<pt>();
-
+TransArc ta;
 int NUMCTRLPTS = 7;
 
 float ballSize = 5;
@@ -15,7 +15,7 @@ int pickedCurve = -1;
 
 void init(){
   generateAvgCurve(curve1, curve2);
-
+  ta = new TransArc(avgCurve, c1pts, c2pts);
 }
 
 void customizedInit(){
@@ -126,7 +126,7 @@ void generateAvgCurve(pt[] curve1, pt[] curve2){
   for(int i = 0; i < 1000; i ++){
     println("c1tan: ", c1tan.x, " ", c1tan.y, " ", c1tan.z);
     println("c2tan: ", c2tan.x, " ", c2tan.y, " ", c2tan.z);
-    nextpoint = P(curpoint, V(10,U(A(c1tan,c2tan))));
+    nextpoint = P(curpoint, V(3,U(A(c1tan,c2tan))));
     
     curpoint = nextpoint;
     println("nextpoint: ", nextpoint.x, " ", nextpoint.y, " ", nextpoint.z);
@@ -148,7 +148,7 @@ void generateAvgCurve(pt[] curve1, pt[] curve2){
 }
 
 void drawCurveFromArrayList(ArrayList<pt> points){
-  println("points.size:", points.size());
+  //println("points.size:", points.size());
   pt curpt = points.get(0);
   pt nextpt;
   for (int i=1; i< points.size(); i++){
@@ -169,9 +169,11 @@ void Interpolate(){
   draw7Bezier(curve2, 3, color(0, 128, 128));
   
   
-  generateAvgCurve(curve1, curve2);
+  //generateAvgCurve(curve1, curve2);
   drawCurveFromArrayList(avgCurve);
-  
+  if (showTransArc){
+    ta.drawArc();
+  }
   //pt ext = P(200,-150,100);
   //pt closest = P(ptOn7Bezier(curve1, findClosestPtOn7Bezier(ext,curve1,100)));
   //stroke(0);
