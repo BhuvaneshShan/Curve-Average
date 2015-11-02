@@ -133,10 +133,12 @@ void generateAvgCurve(pt[] curve1, pt[] curve2){
     
     c1param = findClosestPtOn7Bezier(curpoint, curve1, 100);
     c2param = findClosestPtOn7Bezier(curpoint, curve2, 100);
-    
-    c1pts.add(ptOn7Bezier(curve1, c1param));
-    c2pts.add(ptOn7Bezier(curve2, c2param));
+    pt c1 = ptOn7Bezier(curve1, c1param);
+    pt c2 = ptOn7Bezier(curve2, c2param);
+    c1pts.add(c1);
+    c2pts.add(c2);
     avgCurve.add(nextpoint);
+    
     println("params: ", c1param, "; ", c2param);
     
     c1tan = U(getTangent(curve1, c1param));
@@ -177,6 +179,7 @@ void Interpolate(){
     morphFrame = morphFrame+1;
     if(morphFrame>TotalMorphFrames)
       morphFrame = 0;
+    showAllQuads(avgCurve, c1pts, c2pts);
   }
   //pt ext = P(200,-150,100);
   //pt closest = P(ptOn7Bezier(curve1, findClosestPtOn7Bezier(ext,curve1,100)));
