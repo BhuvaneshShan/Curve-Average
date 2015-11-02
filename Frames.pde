@@ -17,6 +17,7 @@ int pickedCtrl = -1;
 int pickedCurve = -1;
 
 boolean showInflation = false;
+boolean showNet = false;
 
 void init(){
   generateAvgCurve(curve1, curve2);
@@ -183,11 +184,18 @@ void Interpolate(){
   //generateAvgCurve(curve1, curve2);
   drawCurveFromArrayList(avgCurve);
   if (showTransArc){
-    ta.drawArc();
+    //ta.drawArc();
     ta.morph(morphFrame/TotalMorphFrames);
     morphFrame = morphFrame+1;
     if(morphFrame>TotalMorphFrames)
       morphFrame = 0;
+  }
+  
+  if (showNet){
+    ta.drawArc();
+    for (int i = 0; i < TotalMorphFrames; i+=2){
+      ta.morph(i/TotalMorphFrames);
+    }
   }
   //pt ext = P(200,-150,100);
   //pt closest = P(ptOn7Bezier(curve1, findClosestPtOn7Bezier(ext,curve1,100)));

@@ -160,6 +160,7 @@ void keyPressed() {
   if(key=='#') exit();
   if(key=='I') showInflation = !showInflation;
   if(key=='t') {showTransArc=!showTransArc;morphFrame = 0;}
+  if(key=='n') {showNet = !showNet;}
   //if(key=='g') {generateAvgCurve(curve1, curve2);ta.Copy(avgCurve, c1pts, c2pts);}
   
   change=true;
