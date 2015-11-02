@@ -174,8 +174,8 @@ void drawCurveFromArrayList(ArrayList<pt> points){
 void Interpolate(){
   //show(startPt, 10);
   //show(endPt, 10);
-  showPoints(curve1, color(128,0,128), ballSize);
-  showPoints(curve2, color(0,128,128), ballSize);
+  showPoints(curve1, color(100,200,250), ballSize);
+  showPoints(curve2, color(255,153,153), ballSize);
   c1tube = draw7Bezier(curve1, 3, color(128, 0, 128));
   c2tube = draw7Bezier(curve2, 3, color(0, 128, 128));
   showAllQuads(avgCurve,c1pts,c2pts,showInflation);

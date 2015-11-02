@@ -1,10 +1,14 @@
 void showAllQuads(ArrayList<pt> ac, ArrayList<pt> c1p, ArrayList<pt> c2p, boolean showInflation){
   int colFlag = 0;
+  pt prevQuadPoints[] = new pt[8];
+  for(int k=0;k<8;k++){
+    prevQuadPoints[k] = P();
+  }
   if (showInflation) {
     for(int i=0;i<ac.size()-1;i++){
       if(i%2==0) colFlag =0;
       else colFlag = 1;
-      showQuad(ac.get(i), ac.get(i+1), c2p.get(i), V(ac.get(i),c1p.get(i)).norm(),color(0,102,0), colFlag);
+      prevQuadPoints = showQuad(prevQuadPoints, ac.get(i), ac.get(i+1), c2p.get(i), V(ac.get(i),c1p.get(i)).norm(),color(0,102,0), colFlag);
     }
   }
   for(int i=0;i<c1tube.size()-1;i++){
@@ -70,18 +74,19 @@ void showTube(boolean tube1, int ind, float r, color co, int colFlag){
  }
 }
 
-void showQuad(pt p, pt q, pt m, float r, color co, int colFlag){
+pt[] showQuad(pt prevQuadpoints[], pt p, pt q, pt m, float r, color co, int colFlag){
   vec pm = V(p,m);
   vec pq = V(p,q);
   vec nor =  N(pm,pq);
   vec nornor = U(nor);
-  pt pp[] = new pt[8];
+  //pt pp[] = new pt[8];
+  pt pp[] = prevQuadpoints;
   pt qp[] = new pt[8];
-  pp[0] = P(p,V(r,nornor));
+  //pp[0] = P(p,V(r,nornor));
   qp[0] = P(q,V(r,nornor));
   for(int i=1;i<8;i++){
-     vec ppv = R(V(p,pp[i-1]), PI/4, pq);
-     pp[i] = P(p,ppv);
+     //vec ppv = R(V(p,pp[i-1]), PI/4, pq);
+     //pp[i] = P(p,ppv);
      vec qpv = R(V(q,qp[i-1]), PI/4, pq);
      qp[i] = P(q,qpv);
   }
@@ -109,4 +114,5 @@ void showQuad(pt p, pt q, pt m, float r, color co, int colFlag){
     vertex(pp[(i+1)%7]);
     endShape(CLOSE);
   }
+  return qp;
 }
