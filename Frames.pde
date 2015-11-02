@@ -5,6 +5,9 @@ pt[] curve2 = {P(startPt), P(50,30,40), P(100,80,80), P(130,100,120), P(185,150,
 ArrayList<pt> avgCurve = new ArrayList<pt>();
 ArrayList<pt> c1pts = new ArrayList<pt>();
 ArrayList<pt> c2pts = new ArrayList<pt>();
+ArrayList<pt> c1tube; 
+ArrayList<pt> c2tube;
+
 TransArc ta;
 int NUMCTRLPTS = 7;
 
@@ -12,6 +15,8 @@ float ballSize = 5;
 
 int pickedCtrl = -1;
 int pickedCurve = -1;
+
+boolean showInflation = false;
 
 void init(){
   generateAvgCurve(curve1, curve2);
@@ -55,15 +60,19 @@ pt ptOn7Bezier(pt[] controls, float param){
   return P(bezierCurve(controls[0], controls[1], controls[2], controls[3],controls[4],controls[5],controls[6], param));
 }
 
-void draw7Bezier(pt[] controls, float lineWidth, color c){
+ArrayList<pt> draw7Bezier(pt[] controls, float lineWidth, color c){
   pt previousPt = P(controls[0]);
+  ArrayList<pt> tube = new ArrayList<pt>();
+  tube.add(previousPt);
   for (int t=0; t<=100; t++){
     pt nextPt = P(bezierCurve(controls[0], controls[1], controls[2], controls[3],controls[4],controls[5],controls[6], (float)t/100.0));
     stroke(c,255);
     strokeWeight(lineWidth);
     line(previousPt.x, previousPt.y, previousPt.z, nextPt.x, nextPt.y, nextPt.z);
     previousPt = P(nextPt);
+    tube.add(previousPt);
   }
+  return tube;
 }
 
 vec getTangent(pt[] controls, float t){
@@ -167,9 +176,9 @@ void Interpolate(){
   //show(endPt, 10);
   showPoints(curve1, color(128,0,128), ballSize);
   showPoints(curve2, color(0,128,128), ballSize);
-  draw7Bezier(curve1, 3, color(128, 0, 128));
-  draw7Bezier(curve2, 3, color(0, 128, 128));
-  
+  c1tube = draw7Bezier(curve1, 3, color(128, 0, 128));
+  c2tube = draw7Bezier(curve2, 3, color(0, 128, 128));
+  showAllQuads(avgCurve,c1pts,c2pts,showInflation);
   
   //generateAvgCurve(curve1, curve2);
   drawCurveFromArrayList(avgCurve);
@@ -179,7 +188,6 @@ void Interpolate(){
     morphFrame = morphFrame+1;
     if(morphFrame>TotalMorphFrames)
       morphFrame = 0;
-    showAllQuads(avgCurve, c1pts, c2pts);
   }
   //pt ext = P(200,-150,100);
   //pt closest = P(ptOn7Bezier(curve1, findClosestPtOn7Bezier(ext,curve1,100)));
