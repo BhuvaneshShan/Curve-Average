@@ -18,6 +18,7 @@ int pickedCurve = -1;
 
 boolean showInflation = false;
 boolean showNet = false;
+boolean showBottomNet = false;
 
 void init(){
   generateAvgCurve(curve1, curve2);
@@ -185,7 +186,7 @@ void Interpolate(){
   drawCurveFromArrayList(avgCurve);
   if (showTransArc){
     //ta.drawArc();
-    ta.morph(morphFrame/TotalMorphFrames);
+    ta.morph(morphFrame/TotalMorphFrames, color(255,0,0),3);
     morphFrame = morphFrame+1;
     if(morphFrame>TotalMorphFrames)
       morphFrame = 0;
@@ -193,8 +194,9 @@ void Interpolate(){
   
   if (showNet){
     ta.drawArc();
-    for (int i = 0; i < TotalMorphFrames; i+=2){
-      ta.morph(i/TotalMorphFrames);
+    for (int i = 0; i < TotalMorphFrames; i+=TotalMorphFrames/10){
+      if (i!=TotalMorphFrames/2)
+        ta.morph(i/TotalMorphFrames, color(#1E8BE3),1);
     }
   }
   //pt ext = P(200,-150,100);

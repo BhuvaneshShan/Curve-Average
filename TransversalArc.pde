@@ -1,6 +1,6 @@
 boolean showTransArc = false;
 float morphFrame = 0;
-float TotalMorphFrames = 20;
+float TotalMorphFrames = 120;
 class TransArc{
   ArrayList<pt> avgCur;
   ArrayList<pt> c1pt;
@@ -31,13 +31,13 @@ class TransArc{
       for(float j=0;j<=1;j=j+0.01){
         pt newpt = hermitePoint(j,p,ptan, q, qtan);
         stroke(color(#25892B));
-        strokeWeight(3);
+        strokeWeight(1);
         line(oldpt.x,oldpt.y,oldpt.z,newpt.x,newpt.y,newpt.z);
         oldpt = newpt;
       }
     }
   }
-  void morph(float t){
+  void morph(float t, color c, float strokeWeight){
       pt oldpt = avgCur.get(0);
       for(int i=0;i<avgCurve.size(); i=i+1){
          pt m = avgCur.get(i);
@@ -46,8 +46,8 @@ class TransArc{
          vec ptan = V(3,V(p,m));
          vec qtan = V(3,V(m,q));
          pt newpt = hermitePoint(t, p, ptan, q, qtan);
-         stroke(color(#4359C4));
-         strokeWeight(3);
+         stroke(c);
+         strokeWeight(strokeWeight);
          line(oldpt.x,oldpt.y,oldpt.z,newpt.x,newpt.y,newpt.z);
          oldpt = newpt;
       }

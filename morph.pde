@@ -155,12 +155,12 @@ void keyPressed() {
   if(key=='L') {P.loadPts("data/pts"); Q.loadPts("data/pts2");}   // loads saved model
   if(key=='w') P.savePts("data/pts");   // save vertices to pts
   if(key=='l') P.loadPts("data/pts"); 
-  if(key=='a') {animating=!animating;}// toggle animation
   if(key==',') viewpoint=!viewpoint;
   if(key=='#') exit();
-  if(key=='I') showInflation = !showInflation;
-  if(key=='t') {showTransArc=!showTransArc;morphFrame = 0;}
-  if(key=='n') {showNet = !showNet;}
+  if(key=='I') {showInflation = !showInflation; showNet = false; showBottomNet = false;}
+  if(key=='a') {showTransArc=!showTransArc;morphFrame = 0; showInflation = false;}
+  if(key=='n') {showNet = !showNet; showBottomNet = false; showInflation = false;}
+  if(key=='b') {showBottomNet = ! showBottomNet; showNet = false; showInflation = false;}
   //if(key=='g') {generateAvgCurve(curve1, curve2);ta.Copy(avgCurve, c1pts, c2pts);}
   
   change=true;
@@ -253,5 +253,5 @@ void displayFooter() { // Displays help text at the bottom
     }
 
 String title ="6491 P3 2015: Curve Morphing", name ="Ashwin Kachhara | Bhuvanesh Shanmuga Sundaram",
-       menu="?:help, !:picture, ~:(start/stop)capture, space:rotate, s/wheel:closer, f/F:refocus, a:anim, #:quit",
-       guide="I:show Inflation  t:Transversal arc+morph x/z:move point along XY plane/Z axis"; // user's guide
+       menu="?:help, !:picture, ~:(start/stop)capture, space:rotate, s/wheel:closer, f/F:refocus, #:quit",
+       guide="I:show Inflation  b: Show Bottom Net n: Show Net a:animate x/z:move point along XY plane/Z axis"; // user's guide
