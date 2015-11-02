@@ -80,8 +80,9 @@ void draw() {
      Viewer = viewPoint(); 
      viewpoint=false;
      }
-   noFill(); stroke(red); show(Viewer,P(200,200,0)); show(Viewer,P(200,-200,0)); show(Viewer,P(-200,200,0)); show(Viewer,P(-200,-200,0));
+   noFill(); strokeWeight(1); stroke(red); show(Viewer,P(200,200,0)); show(Viewer,P(200,-200,0)); show(Viewer,P(-200,200,0)); show(Viewer,P(-200,-200,0));
    noStroke(); fill(red,100); show(Viewer,5); noFill();
+   strokeWeight(2);
    
    // if(tracking) {O = pick( mouseX, mouseY ); if(tracking) F=P(O); picking=false;} else {fill(yellow); show(O,3);}
    slide(PtQ.G,0.001); // modifies fu & fv

@@ -185,7 +185,7 @@ void Interpolate(){
   //generateAvgCurve(curve1, curve2);
   drawCurveFromArrayList(avgCurve);
   if (showTransArc){
-    //ta.drawArc();
+    ta.drawArc();
     ta.morph(morphFrame/TotalMorphFrames, color(255,0,0),3);
     morphFrame = morphFrame+1;
     if(morphFrame>TotalMorphFrames)
