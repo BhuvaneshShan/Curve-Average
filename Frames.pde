@@ -19,6 +19,7 @@ int pickedCurve = -1;
 boolean showInflation = false;
 boolean showNet = false;
 boolean showBottomNet = false;
+boolean showThemeParkTube = false;
 
 void init(){
   generateAvgCurve(curve1, curve2);

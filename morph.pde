@@ -158,10 +158,12 @@ void keyPressed() {
   if(key=='l') P.loadPts("data/pts"); 
   if(key==',') viewpoint=!viewpoint;
   if(key=='#') exit();
-  if(key=='I') {showInflation = !showInflation; showNet = false; showBottomNet = false;}
+  if(key=='I') {showInflation = !showInflation; showNet = false; showBottomNet = false; showThemeParkTube = false;}
   if(key=='a') {showTransArc=!showTransArc;morphFrame = 0; showInflation = false;}
-  if(key=='n') {showNet = !showNet; showBottomNet = false; showInflation = false;}
-  if(key=='b') {showBottomNet = ! showBottomNet; showNet = false; showInflation = false;}
+  if(key=='n') {showNet = !showNet; showBottomNet = false; showInflation = false; showThemeParkTube=false;}
+  if(key=='b') {showBottomNet = ! showBottomNet; showNet = false; showInflation = false; showThemeParkTube = false;}
+  if(key=='y') {showNet = true; showBottomNet = true; showInflation = false; showThemeParkTube = false;}
+  if(key=='T') {showThemeParkTube = !showThemeParkTube; showBottomNet = false; showNet = false; showInflation = false;}
   //if(key=='g') {generateAvgCurve(curve1, curve2);ta.Copy(avgCurve, c1pts, c2pts);}
   
   change=true;
@@ -255,4 +257,4 @@ void displayFooter() { // Displays help text at the bottom
 
 String title ="6491 P3 2015: Curve Average in 3D", name ="Ashwin Kachhara | Bhuvanesh Shanmuga Sundaram",
        menu="?:help, space:rotate, s/wheel:closer, v: translate camera #:quit",
-       guide="I:show Inflation  b: Show Bottom Net n: Show Net a:animate x/z:move point along XY plane/Z axis"; // user's guide
+       guide="I:Inflation  b: Bottom Net n: Net a:animate T: Half tube x/z:move point along XY plane/Z axis"; // user's guide
