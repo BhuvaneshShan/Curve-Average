@@ -253,6 +253,6 @@ void displayFooter() { // Displays help text at the bottom
     scribeFooter(menu,0); 
     }
 
-String title ="6491 P3 2015: Curve Morphing", name ="Ashwin Kachhara | Bhuvanesh Shanmuga Sundaram",
-       menu="?:help, !:picture, ~:(start/stop)capture, space:rotate, s/wheel:closer, f/F:refocus, #:quit",
+String title ="6491 P3 2015: Curve Average in 3D", name ="Ashwin Kachhara | Bhuvanesh Shanmuga Sundaram",
+       menu="?:help, space:rotate, s/wheel:closer, v: translate camera #:quit",
        guide="I:show Inflation  b: Show Bottom Net n: Show Net a:animate x/z:move point along XY plane/Z axis"; // user's guide
